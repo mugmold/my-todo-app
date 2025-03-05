@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
+import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/views/pages/about_me_page.dart';
 import 'package:my_todo_app/views/pages/home_page.dart';
@@ -28,11 +29,7 @@ class _WidgetTreeState extends State<WidgetTree> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.ristekBackgroundColor,
-        leading: Padding(
-          padding: EdgeInsets.all(10.0),
-          child: Image.asset('assets/images/icon.png'),
-        ),
+        backgroundColor: Constants.ristekPrimaryColor,
         title: ValueListenableBuilder(
           valueListenable: selectedPage,
           builder: (context, value, child) {
@@ -45,11 +42,12 @@ class _WidgetTreeState extends State<WidgetTree> {
         centerTitle: true,
       ),
       bottomNavigationBar: NavbarWidget(),
-      body: ValueListenableBuilder(
-        valueListenable: selectedPage,
-        builder: (context, value, child) {
-          return pages[value];
+      body: PageView(
+        controller: pageController,
+        onPageChanged: (value) {
+          selectedPage.value = value;
         },
+        children: pages,
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
 
 class NavbarWidget extends StatelessWidget {
@@ -9,30 +10,85 @@ class NavbarWidget extends StatelessWidget {
     return ValueListenableBuilder(
       valueListenable: selectedPage,
       builder: (context, value, child) {
-        return NavigationBar(
-          destinations: [
-            Padding(
-              // memisahkan icon berdasarkan lebar screen
-              padding: EdgeInsets.only(
-                  right: MediaQuery.of(context).size.width * 0.2),
-              child: NavigationDestination(
-                icon: Icon(Icons.home),
-                label: 'Home',
+        return Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.lightBlueAccent.withValues(alpha: 0.1),
+                blurRadius: 4,
+                spreadRadius: 1,
+                offset: Offset(0, -1),
+              ),
+            ],
+          ),
+          child: Theme(
+            data: ThemeData(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              focusColor: Colors.transparent,
+            ),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: BottomNavigationBar(
+                backgroundColor: Colors.white,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      child: Image.asset(
+                        'assets/images/home_inactive.png',
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                    ),
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      child: Image.asset(
+                        'assets/images/home_active.png',
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                    ),
+                    label: '',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      child: Image.asset(
+                        'assets/images/profile_inactive.png',
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                    ),
+                    activeIcon: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.height * 0.05,
+                      ),
+                      child: Image.asset(
+                        'assets/images/profile_active.png',
+                        height: MediaQuery.of(context).size.height * 0.04,
+                      ),
+                    ),
+                    label: '',
+                  ),
+                ],
+                currentIndex: selectedPage.value,
+                onTap: (index) {
+                  pageController.animateToPage(
+                    index,
+                    duration: Duration(milliseconds: 100),
+                    curve: Curves.easeInOut,
+                  );
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width * 0.2),
-              child: NavigationDestination(
-                icon: Icon(Icons.person),
-                label: 'About me',
-              ),
-            ),
-          ],
-          selectedIndex: value,
-          onDestinationSelected: (value) {
-            selectedPage.value = value;
-          },
+          ),
         );
       },
     );

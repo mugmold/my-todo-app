@@ -9,10 +9,12 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.ristekBackgroundColor,
+        backgroundColor: Colors.white,
         title: const Text(
           'Welcome',
-          style: Constants.ristekTitleStyle,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
         ),
         centerTitle: true,
       ),
@@ -32,15 +34,19 @@ class WelcomePage extends StatelessWidget {
             // Button buat pergi ke widgetTree
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Constants.ristekBackgroundColor,
+                backgroundColor: Constants.ristekPrimaryColor,
               ),
               onPressed: () {
                 // Ganti navigator default dr welcome jadi widgetTree
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return WidgetTree(); // Pergi ke WidgetTree sebagai struktur navigasi utama di app
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) {
+                      return WidgetTree();
+                    },
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return FadeTransition(opacity: animation, child: child);
                     },
                   ),
                 );
