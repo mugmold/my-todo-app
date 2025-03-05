@@ -30,4 +30,10 @@ class TodoDatabase {
     todoList.removeAt(index);
     await saveTodos(todoList);
   }
+
+  static Future<void> toggleTodoButton(int index) async {
+    final todoList = await loadTodos();
+    todoList[index].isComplete = !todoList[index].isComplete;
+    await saveTodos(todoList);
+  }
 }

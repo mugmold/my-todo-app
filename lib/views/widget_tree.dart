@@ -12,9 +12,18 @@ List<Widget> pages = [
   AboutMePage(),
 ];
 
-List<String> pagesName = [
-  'To do',
-  'About me',
+List<AppBar> pagesAppBar = [
+  AppBar(
+    backgroundColor: Colors.white,
+  ),
+  AppBar(
+    backgroundColor: Constants.ristekPrimaryColor,
+    title: Text(
+      'My profile',
+      style: Constants.ristekTitleStyle,
+    ),
+    centerTitle: true,
+  ),
 ];
 
 class WidgetTree extends StatefulWidget {
@@ -28,18 +37,14 @@ class _WidgetTreeState extends State<WidgetTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Constants.ristekPrimaryColor,
-        title: ValueListenableBuilder(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: ValueListenableBuilder<int>(
           valueListenable: selectedPage,
           builder: (context, value, child) {
-            return Text(
-              pagesName[value],
-              style: Constants.ristekTitleStyle,
-            );
+            return pagesAppBar[value];
           },
         ),
-        centerTitle: true,
       ),
       bottomNavigationBar: NavbarWidget(),
       body: PageView(
