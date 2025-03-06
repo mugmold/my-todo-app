@@ -25,6 +25,11 @@ class TodoDatabase {
     await saveTodos();
   }
 
+  static Future<void> editTodo(int index, Todo newTodo) async {
+    todoList.value[index].name = newTodo.name;
+    await saveTodos();
+  }
+
   static Future<void> removeTodo(int index) async {
     todoList.value.removeAt(index);
     await saveTodos();

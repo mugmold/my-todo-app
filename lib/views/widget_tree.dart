@@ -28,7 +28,12 @@ List<AppBar> pagesAppBar = [
 ];
 
 class WidgetTree extends StatefulWidget {
-  const WidgetTree({super.key});
+  const WidgetTree({
+    super.key,
+    this.message,
+  });
+
+  final String? message;
 
   @override
   State<WidgetTree> createState() => _WidgetTreeState();
@@ -39,6 +44,20 @@ class _WidgetTreeState extends State<WidgetTree> {
   void initState() {
     super.initState();
     _loadTodos();
+
+    if (widget.message != null) {
+      // Jalankan setelah build selesai
+      Future.microtask(() {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(widget.message!),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      });
+    }
   }
 
   void _loadTodos() async {

@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/notifiers.dart';
-import 'package:my_todo_app/data/todo.dart';
-import 'package:my_todo_app/data/todo_database.dart';
+import 'package:my_todo_app/views/pages/add_todo_page.dart';
 import 'package:my_todo_app/views/widgets/todo_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,7 +20,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller = TextEditingController();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -56,37 +54,44 @@ class _HomePageState extends State<HomePage> {
                   color: Color(0xFF474747),
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Your Tasks',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  FilledButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(
+                        Constants.ristekPrimaryColor,
+                      ),
+                      minimumSize: WidgetStateProperty.all<Size>(
+                        Size(80, 30),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddTodoPage(),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'Add Task',
+                    ),
+                  ),
+                ],
+              ),
             ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(bottom: 8.0),
-          child: Container(
-            padding: EdgeInsets.all(10),
-            width: MediaQuery.of(context).size.width * 0.85,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: Constants.ristekPrimaryTransparent,
-                width: 1,
-              ),
-            ),
-            child: TextField(
-              controller: controller,
-              decoration: InputDecoration(
-                hintText: 'type something...',
-                border: InputBorder.none,
-              ),
-              onEditingComplete: () async {
-                if (controller.text.isNotEmpty) {
-                  Todo todo = Todo(name: controller.text);
-                  await TodoDatabase.addTodo(todo);
-                  controller.text = '';
-                  setState(() {});
-                }
-              },
-            ),
           ),
         ),
         Expanded(

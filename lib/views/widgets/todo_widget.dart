@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/todo_database.dart';
+import 'package:my_todo_app/views/pages/edit_todo_page.dart';
 import 'package:my_todo_app/views/widgets/checkbox_widget.dart';
 
 class TodoWidget extends StatefulWidget {
@@ -43,6 +44,16 @@ class _TodoWidgetState extends State<TodoWidget> {
           onTap: () async {
             await TodoDatabase.toggleTodoButton(widget.index);
             taskComplete.value = !taskComplete.value;
+          },
+          onLongPress: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => EditTodoPage(
+                  index: widget.index,
+                ),
+              ),
+            );
           },
           child: Container(
             padding: EdgeInsets.all(15),
