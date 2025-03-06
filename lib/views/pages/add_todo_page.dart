@@ -148,8 +148,15 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       },
                     ),
                   ),
+                  Text(
+                    errorText,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                    ),
+                  ),
                   SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   FilledButton(
                     style: ButtonStyle(
@@ -195,16 +202,6 @@ class _AddTodoPageState extends State<AddTodoPage> {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    errorText,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12,
                     ),
                   ),
                 ],

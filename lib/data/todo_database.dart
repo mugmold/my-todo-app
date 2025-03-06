@@ -8,35 +8,35 @@ class TodoDatabase {
   static Future<void> saveTodos() async {
     final prefs = await SharedPreferences.getInstance();
     final todoListString =
-        todoList.value.map((todo) => jsonEncode(todo.toMap())).toList();
+        todoListNotifier.value.map((todo) => jsonEncode(todo.toMap())).toList();
     await prefs.setStringList('todos', todoListString);
   }
 
   static Future<void> loadTodos() async {
     final prefs = await SharedPreferences.getInstance();
     final todoListString = prefs.getStringList('todos') ?? [];
-    todoList.value = todoListString
+    todoListNotifier.value = todoListString
         .map((todo) => Todo.fromMapToTodo(jsonDecode(todo)))
         .toList();
   }
 
   static Future<void> addTodo(Todo todo) async {
-    todoList.value.add(todo);
+    todoListNotifier.value.add(todo);
     await saveTodos();
   }
 
   static Future<void> editTodo(int index, Todo newTodo) async {
-    todoList.value[index].name = newTodo.name;
+    todoListNotifier.value[index].name = newTodo.name;
     await saveTodos();
   }
 
   static Future<void> removeTodo(int index) async {
-    todoList.value.removeAt(index);
+    todoListNotifier.value.removeAt(index);
     await saveTodos();
   }
 
   static Future<void> toggleTodoButton(int index) async {
-    todoList.value[index].isComplete = !todoList.value[index].isComplete;
+    todoListNotifier.value[index].isComplete = !todoListNotifier.value[index].isComplete;
     await saveTodos();
   }
 }

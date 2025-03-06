@@ -39,13 +39,18 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: 30,
               ),
-              Text(
-                'Welcome User',
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+              ValueListenableBuilder(
+                valueListenable: nicknameNotifier,
+                builder: (context, value, child) {
+                  return Text(
+                    'Welcome ${nicknameNotifier.value.isEmpty ? 'John' : nicknameNotifier.value}!',
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  );
+                },
               ),
               Text(
                 'Have a nice day !',
@@ -98,7 +103,7 @@ class _HomePageState extends State<HomePage> {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
             child: ValueListenableBuilder(
-              valueListenable: todoList,
+              valueListenable: todoListNotifier,
               builder: (context, value, child) {
                 return ListView.builder(
                   shrinkWrap: true,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
+import 'package:my_todo_app/data/personal_info.dart';
 import 'package:my_todo_app/data/todo_database.dart';
 import 'package:my_todo_app/views/pages/about_me_page.dart';
 import 'package:my_todo_app/views/pages/home_page.dart';
@@ -44,25 +45,41 @@ class _WidgetTreeState extends State<WidgetTree> {
   void initState() {
     super.initState();
     _loadTodos();
+    _loadPersonalData();
 
     if (widget.message != null) {
       // Jalankan setelah build selesai
-      Future.microtask(() {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(widget.message!),
-              duration: Duration(seconds: 2),
-            ),
-          );
-        }
-      });
+      Future.microtask(
+        () {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(widget.message!),
+                backgroundColor: Colors.green,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
+        },
+      );
     }
   }
 
   void _loadTodos() async {
     await TodoDatabase.loadTodos();
     setState(() {});
+  }
+
+  void _loadPersonalData() async {
+    await PersonalInfo.loadPersonalData();
+    setState(() {
+      setState(() {
+        controllerFullName.text = fullNameNotifier.value;
+        controllerNickname.text = nicknameNotifier.value;
+        controllerHobbies.text = hobbiesNotifier.value;
+        controllerSocialMedia.text = socialMediaNotifier.value;
+      });
+    });
   }
 
   @override

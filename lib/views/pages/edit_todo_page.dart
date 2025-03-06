@@ -24,7 +24,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
   @override
   void initState() {
     super.initState();
-    controller.text = todoList.value[widget.index].name;
+    controller.text = todoListNotifier.value[widget.index].name;
   }
 
   @override
@@ -160,8 +160,15 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       },
                     ),
                   ),
+                  Text(
+                    errorText,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                    ),
+                  ),
                   SizedBox(
-                    height: 30,
+                    height: 15,
                   ),
                   FilledButton(
                     style: ButtonStyle(
@@ -212,14 +219,17 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    errorText,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12,
-                    ),
-                  ),
                   TextButton(
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all<Size>(
+                        Size(double.infinity, 50),
+                      ),
+                      shape: WidgetStateProperty.all<OutlinedBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
                     onPressed: () {
                       showDialog(
                         context: context,
