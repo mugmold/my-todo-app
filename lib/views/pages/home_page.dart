@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:my_todo_app/data/constants.dart';
+import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/data/todo.dart';
 import 'package:my_todo_app/data/todo_database.dart';
 import 'package:my_todo_app/views/widgets/todo_widget.dart';
@@ -12,20 +13,10 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-List<Todo> todoList = [];
-
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    loadTodoList();
-  }
-
-  void loadTodoList() async {
-    List<Todo> data = await TodoDatabase.loadTodos();
-    setState(() {
-      todoList = data;
-    });
   }
 
   @override
@@ -92,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                   Todo todo = Todo(name: controller.text);
                   await TodoDatabase.addTodo(todo);
                   controller.text = '';
-                  loadTodoList();
+                  setState(() {});
                 }
               },
             ),
@@ -101,17 +92,22 @@ class _HomePageState extends State<HomePage> {
         Expanded(
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: todoList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: TodoWidget(
-                    taskName: todoList[index].name,
-                    isComplete: todoList[index].isComplete,
-                    index: index,
-                  ),
+            child: ValueListenableBuilder(
+              valueListenable: todoList,
+              builder: (context, value, child) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: TodoWidget(
+                        taskName: value[index].name,
+                        isComplete: value[index].isComplete,
+                        index: index,
+                      ),
+                    );
+                  },
                 );
               },
             ),

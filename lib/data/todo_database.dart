@@ -1,39 +1,37 @@
 import 'dart:convert';
 
+import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/data/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TodoDatabase {
-  static Future<void> saveTodos(List<Todo> newTodoList) async {
+  static Future<void> saveTodos() async {
     final prefs = await SharedPreferences.getInstance();
-    final todoList =
-        newTodoList.map((todo) => jsonEncode(todo.toMap())).toList();
-    await prefs.setStringList('todos', todoList);
+    final todoListString =
+        todoList.value.map((todo) => jsonEncode(todo.toMap())).toList();
+    await prefs.setStringList('todos', todoListString);
   }
 
-  static Future<List<Todo>> loadTodos() async {
+  static Future<void> loadTodos() async {
     final prefs = await SharedPreferences.getInstance();
-    final todoList = prefs.getStringList('todos') ?? [];
-    return todoList
+    final todoListString = prefs.getStringList('todos') ?? [];
+    todoList.value = todoListString
         .map((todo) => Todo.fromMapToTodo(jsonDecode(todo)))
         .toList();
   }
 
   static Future<void> addTodo(Todo todo) async {
-    final todoList = await loadTodos();
-    todoList.add(todo);
-    await saveTodos(todoList);
+    todoList.value.add(todo);
+    await saveTodos();
   }
 
   static Future<void> removeTodo(int index) async {
-    final todoList = await loadTodos();
-    todoList.removeAt(index);
-    await saveTodos(todoList);
+    todoList.value.removeAt(index);
+    await saveTodos();
   }
 
   static Future<void> toggleTodoButton(int index) async {
-    final todoList = await loadTodos();
-    todoList[index].isComplete = !todoList[index].isComplete;
-    await saveTodos(todoList);
+    todoList.value[index].isComplete = !todoList.value[index].isComplete;
+    await saveTodos();
   }
 }

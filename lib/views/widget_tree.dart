@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
+import 'package:my_todo_app/data/todo_database.dart';
 import 'package:my_todo_app/views/pages/about_me_page.dart';
 import 'package:my_todo_app/views/pages/home_page.dart';
 import 'package:my_todo_app/views/widgets/navbar_widget.dart';
@@ -34,6 +35,17 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+  @override
+  void initState() {
+    super.initState();
+    _loadTodos();
+  }
+
+  void _loadTodos() async {
+    await TodoDatabase.loadTodos();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
