@@ -8,7 +8,7 @@ import 'package:my_todo_app/views/widget_tree.dart';
 class EditTodoPage extends StatefulWidget {
   const EditTodoPage({
     super.key,
-    required this.index,
+    required this.index, // Index todo yang mau diedit
   });
 
   final int index;
@@ -21,12 +21,14 @@ class _EditTodoPageState extends State<EditTodoPage> {
   TextEditingController controller = TextEditingController();
   String errorText = '';
 
+  // Inisialisasi controller dengan value todo yang mau diedit
   @override
   void initState() {
     super.initState();
     controller.text = todoListNotifier.value[widget.index].name;
   }
 
+  // Dispose buat mengatasi memory leak
   @override
   void dispose() {
     controller.dispose();
@@ -69,9 +71,9 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 ),
               ),
               Align(
-                alignment: Alignment.topCenter, // Paksa ke tengah atas
+                alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 50), // Sama kayak back button
+                  padding: EdgeInsets.only(top: 50),
                   child: Text(
                     'Edit Task',
                     style: TextStyle(
@@ -186,10 +188,10 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     ),
                     onPressed: () async {
                       if (controller.text.isNotEmpty) {
-                        Todo todo = Todo(name: controller.text);
-                        await TodoDatabase.editTodo(widget.index, todo);
+                        Todo todo = Todo(name: controller.text); // Buat todo baru menggantikan todo lama
+                        await TodoDatabase.editTodo(widget.index, todo); // Edit todo berdasarkan index
                         if (context.mounted) {
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.pushAndRemoveUntil( // Pindah ke halaman utama dan hapus semua halaman sebelumnya
                             context,
                             MaterialPageRoute(
                               builder: (context) => WidgetTree(
@@ -234,7 +236,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
+                          return AlertDialog( // Dialog untuk konfirmasi hapus task
                             title: Text("Delete Task"),
                             content: Text(
                               "Are you sure you want to delete this task?",
@@ -250,7 +252,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                                 onPressed: () async {
                                   await TodoDatabase.removeTodo(widget.index);
                                   if (context.mounted) {
-                                    Navigator.pushAndRemoveUntil(
+                                    Navigator.pushAndRemoveUntil( // Pindah ke halaman utama dan hapus semua halaman sebelumnya
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => WidgetTree(

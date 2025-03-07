@@ -12,7 +12,7 @@ class AddTodoPage extends StatefulWidget {
 }
 
 class _AddTodoPageState extends State<AddTodoPage> {
-  TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController(); // Controller buat ambil input user
   String errorText = '';
 
   @override
@@ -57,9 +57,9 @@ class _AddTodoPageState extends State<AddTodoPage> {
                 ),
               ),
               Align(
-                alignment: Alignment.topCenter, // Paksa ke tengah atas
+                alignment: Alignment.topCenter,
                 child: Padding(
-                  padding: EdgeInsets.only(top: 50), // Sama kayak back button
+                  padding: EdgeInsets.only(top: 50),
                   child: Text(
                     'Add Task',
                     style: TextStyle(
@@ -176,8 +176,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
                       if (controller.text.isNotEmpty) {
                         Todo todo = Todo(name: controller.text);
                         await TodoDatabase.addTodo(todo);
-                        if (context.mounted) {
-                          Navigator.pushAndRemoveUntil(
+                        if (context.mounted) { // Cek apakah widget masih ada di tree
+                          Navigator.pushAndRemoveUntil( // Pindah ke halaman lain dan hapus semua halaman sebelumnya
                             context,
                             MaterialPageRoute(
                               builder: (context) => WidgetTree(

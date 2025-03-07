@@ -72,8 +72,10 @@ class _TodoWidgetState extends State<TodoWidget> {
                 Text(
                   widget.taskName,
                   style: TextStyle(
-                    color: taskComplete.value ? Constants.ristekPrimaryColor : Color(0xFF4A4646),
-                    fontSize: 16,
+                    color: taskComplete.value
+                        ? Constants.ristekPrimaryColor
+                        : Color(0xFF4A4646),
+                    fontSize: 17.0,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -83,7 +85,9 @@ class _TodoWidgetState extends State<TodoWidget> {
                     return CheckboxWidget(
                       value: value,
                       onChanged: () async {
-                        await TodoDatabase.toggleTodoButton(widget.index);
+                        await TodoDatabase.toggleTodoButton(
+                          widget.index,
+                        ); // Toggle status todo
                         taskComplete.value = !taskComplete.value;
                       },
                     );

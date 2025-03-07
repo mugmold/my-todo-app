@@ -42,6 +42,8 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
+
+  // Load semua data yang pernah di save di shared preferences jika ada
   @override
   void initState() {
     super.initState();
@@ -51,7 +53,7 @@ class _WidgetTreeState extends State<WidgetTree> {
 
     if (widget.message != null) {
       // Jalankan setelah build selesai
-      Future.microtask(
+      Future.microtask( // Supaya memunculkan Snackbar hanya sekali (jika dibutuhkan)
         () {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(

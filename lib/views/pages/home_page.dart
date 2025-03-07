@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateFormat('EEEE, MMMM dd yyyy').format(DateTime.now()),
+                DateFormat('EEEE, MMMM dd yyyy').format(DateTime.now()), // Tampilkan hari, bulan, tanggal, dan tahun
                 style: TextStyle(
                   fontSize: 13,
                   color: Color(0xFF474747),
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
             child: ValueListenableBuilder(
               valueListenable: todoListNotifier,
               builder: (context, value, child) {
-                return ListView.builder(
+                return ListView.builder( // Tampilkan list todo
                   shrinkWrap: true,
                   itemCount: value.length,
                   itemBuilder: (context, index) {

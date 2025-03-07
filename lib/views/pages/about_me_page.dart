@@ -297,6 +297,7 @@ class _AboutMePageState extends State<AboutMePage> {
   }
 }
 
+// Buat membuka URL
 Future<void> _launchURL(BuildContext context, String url) async {
   final Uri uri = Uri.parse(url);
 
@@ -310,6 +311,7 @@ Future<void> _launchURL(BuildContext context, String url) async {
   }
 }
 
+// Menampilkan snackbar sebagai notifikasi
 void _showSnackbar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

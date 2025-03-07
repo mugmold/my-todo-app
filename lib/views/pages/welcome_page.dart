@@ -23,7 +23,7 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Welcome to My Todo App!',
+              'Welcome to RistekTodo!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class WelcomePage extends StatelessWidget {
                     },
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(opacity: animation, child: child);
+                      return FadeTransition(opacity: animation, child: child); // Transisi fade biar lebih smooth
                     },
                   ),
                 );

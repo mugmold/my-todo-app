@@ -1,3 +1,4 @@
+// Model class Todo
 class Todo {
   String name;
   bool isComplete;
@@ -7,6 +8,7 @@ class Todo {
     this.isComplete = false,
   });
 
+  // Convert Todo object ke Map ataupun sebaliknya (buat json)
   Map<String, dynamic> toMap() {
     return {
       'name': name,

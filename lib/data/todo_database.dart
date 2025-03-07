@@ -4,6 +4,7 @@ import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/data/todo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Class buat simpan dan load data todo
 class TodoDatabase {
   static Future<void> saveTodos() async {
     final prefs = await SharedPreferences.getInstance();

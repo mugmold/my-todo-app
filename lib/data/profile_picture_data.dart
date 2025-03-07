@@ -3,8 +3,9 @@ import 'dart:typed_data';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-Uint8List? profileImageBytes;
+Uint8List? profileImageBytes; // Menyimpan gambar profile user
 
+// Class buat simpan dan load data profile picture user
 class ProfilePictureData {
   static Future<bool> saveProfilePicture(List<int> imageBytes) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
