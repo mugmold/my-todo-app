@@ -92,6 +92,9 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       'Add Task',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],

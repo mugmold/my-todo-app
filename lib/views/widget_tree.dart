@@ -3,6 +3,7 @@ import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/data/personal_info.dart';
+import 'package:my_todo_app/data/profile_picture_data.dart';
 import 'package:my_todo_app/data/todo_database.dart';
 import 'package:my_todo_app/views/pages/about_me_page.dart';
 import 'package:my_todo_app/views/pages/home_page.dart';
@@ -46,6 +47,7 @@ class _WidgetTreeState extends State<WidgetTree> {
     super.initState();
     _loadTodos();
     _loadPersonalData();
+    _loadProfilePicture();
 
     if (widget.message != null) {
       // Jalankan setelah build selesai
@@ -80,6 +82,15 @@ class _WidgetTreeState extends State<WidgetTree> {
         controllerSocialMedia.text = socialMediaNotifier.value;
       });
     });
+  }
+
+  Future<void> _loadProfilePicture() async {
+    final profilePicture = await ProfilePictureData.getProfilePicture();
+    if (profilePicture != null) {
+      setState(() {
+        profileImageBytes = profilePicture;
+      });
+    }
   }
 
   @override

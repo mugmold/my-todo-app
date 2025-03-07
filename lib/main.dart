@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'My ToDo App',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Poppins',
       ),
       home: const WelcomePage(), // Start di WelcomePage
     );

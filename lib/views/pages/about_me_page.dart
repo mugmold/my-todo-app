@@ -1,8 +1,13 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
 import 'package:my_todo_app/data/personal_info.dart';
+import 'package:my_todo_app/data/profile_picture_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutMePage extends StatefulWidget {
@@ -13,11 +18,32 @@ class AboutMePage extends StatefulWidget {
 }
 
 class _AboutMePageState extends State<AboutMePage> {
-
   String fullName = '';
   String nickname = '';
   String hobbies = '';
   String socialMedia = '';
+
+  Future<void> _pickAndSaveProfilePicture() async {
+    final picker = ImagePicker();
+    final XFile? imageFile =
+        await picker.pickImage(source: ImageSource.gallery);
+
+    if (imageFile == null) return;
+
+    File file = File(imageFile.path);
+    Uint8List bytes = await file.readAsBytes();
+
+    await ProfilePictureData.saveProfilePicture(bytes);
+
+    setState(() {
+      profileImageBytes = bytes;
+    });
+  }
+
+  Future<void> loadProfilePicture() async {
+    profileImageBytes = await ProfilePictureData.getProfilePicture();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +69,52 @@ class _AboutMePageState extends State<AboutMePage> {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      CircleAvatar(
-                        radius: 50,
-                        backgroundImage:
-                            AssetImage('assets/images/profile.jpg'),
+                      GestureDetector(
+                        onTap: _pickAndSaveProfilePicture,
+                        onLongPress: () {
+                          // delete profile picture
+                          if (profileImageBytes == null) return;
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Delete Profile Picture'),
+                                content: Text(
+                                    'Are you sure you want to delete your profile picture?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      profileImageBytes = null;
+                                      setState(() {});
+                                      if (context.mounted) {
+                                        Navigator.pop(context);
+                                      }
+                                    },
+                                    child: Text(
+                                      "Delete",
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: profileImageBytes != null
+                              ? MemoryImage(profileImageBytes!)
+                              : AssetImage(
+                                  'assets/images/default_profile_picture.png'),
+                        ),
                       ),
                       SizedBox(
                         height: 20,
@@ -203,8 +271,7 @@ class _AboutMePageState extends State<AboutMePage> {
                             contentPadding: EdgeInsets.all(10.0),
                             prefixIcon: GestureDetector(
                               onTap: () {
-                                _launchURL(
-                                    context, controllerSocialMedia.text);
+                                _launchURL(context, controllerSocialMedia.text);
                               },
                               child: Icon(Icons.link,
                                   color: Constants.ristekPrimaryColor),
@@ -212,7 +279,8 @@ class _AboutMePageState extends State<AboutMePage> {
                           ),
                           onEditingComplete: () async {
                             FocusScope.of(context).unfocus();
-                            socialMediaNotifier.value = controllerSocialMedia.text;
+                            socialMediaNotifier.value =
+                                controllerSocialMedia.text;
                             await PersonalInfo.savePersonalData();
                           },
                         ),
@@ -235,11 +303,12 @@ Future<void> _launchURL(BuildContext context, String url) async {
   if (await canLaunchUrl(uri)) {
     await launchUrl(uri, mode: LaunchMode.externalApplication);
   } else {
-    if (!context.mounted) return; // Cek apakah widget masih ada sebelum showSnackbar
+    if (!context.mounted) {
+      return; // Cek apakah widget masih ada sebelum showSnackbar
+    }
     _showSnackbar(context, 'Could not launch URL $url');
   }
 }
-
 
 void _showSnackbar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(

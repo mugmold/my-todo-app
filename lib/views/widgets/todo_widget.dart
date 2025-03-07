@@ -69,7 +69,14 @@ class _TodoWidgetState extends State<TodoWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(widget.taskName),
+                Text(
+                  widget.taskName,
+                  style: TextStyle(
+                    color: taskComplete.value ? Constants.ristekPrimaryColor : Color(0xFF4A4646),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
                 ValueListenableBuilder(
                   valueListenable: taskComplete,
                   builder: (context, value, child) {
