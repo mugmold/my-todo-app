@@ -28,6 +28,7 @@ class TodoDatabase {
 
   static Future<void> editTodo(int index, Todo newTodo) async {
     todoListNotifier.value[index].name = newTodo.name;
+    todoListNotifier.value[index].description = newTodo.description;
     await saveTodos();
   }
 
@@ -37,7 +38,8 @@ class TodoDatabase {
   }
 
   static Future<void> toggleTodoButton(int index) async {
-    todoListNotifier.value[index].isComplete = !todoListNotifier.value[index].isComplete;
+    todoListNotifier.value[index].isComplete =
+        !todoListNotifier.value[index].isComplete;
     await saveTodos();
   }
 }

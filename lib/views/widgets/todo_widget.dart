@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/todo_database.dart';
-import 'package:my_todo_app/views/pages/edit_todo_page.dart';
+import 'package:my_todo_app/views/pages/view_todo_page.dart';
 import 'package:my_todo_app/views/widgets/checkbox_widget.dart';
 
 class TodoWidget extends StatefulWidget {
@@ -41,7 +41,7 @@ class _TodoWidgetState extends State<TodoWidget> {
     return ValueListenableBuilder(
       valueListenable: taskComplete,
       builder: (context, value, child) {
-        return GestureDetector(
+        return InkWell(
           onTap: () async {
             await TodoDatabase.toggleTodoButton(widget.index);
             taskComplete.value = !taskComplete.value;
@@ -50,13 +50,14 @@ class _TodoWidgetState extends State<TodoWidget> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => EditTodoPage(
+                builder: (context) => ViewTodoPage(
                   index: widget.index,
                 ),
               ),
             );
           },
-          child: Container(
+          borderRadius: BorderRadius.circular(12),
+          child: Ink(
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Colors.white,
@@ -70,7 +71,7 @@ class _TodoWidgetState extends State<TodoWidget> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width * 0.65,
                   child: Text(
                     widget.taskName,

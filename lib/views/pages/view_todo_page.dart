@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/notifiers.dart';
-import 'package:my_todo_app/data/todo.dart';
-import 'package:my_todo_app/data/todo_database.dart';
-import 'package:my_todo_app/views/widget_tree.dart';
+import 'package:my_todo_app/views/pages/edit_todo_page.dart';
 
-class EditTodoPage extends StatefulWidget {
-  const EditTodoPage({
+class ViewTodoPage extends StatefulWidget {
+  const ViewTodoPage({
     super.key,
     required this.index, // Index todo yang mau diedit
   });
@@ -14,15 +12,14 @@ class EditTodoPage extends StatefulWidget {
   final int index;
 
   @override
-  State<EditTodoPage> createState() => _EditTodoPageState();
+  State<ViewTodoPage> createState() => _ViewTodoPageState();
 }
 
-class _EditTodoPageState extends State<EditTodoPage> {
+class _ViewTodoPageState extends State<ViewTodoPage> {
   TextEditingController controllerName =
       TextEditingController(); // Controller buat ambil nama task
   TextEditingController controllerDescription =
       TextEditingController(); // Controller buat ambil deskripsi task
-  String errorText = '';
 
   // Inisialisasi controller dengan value todo yang mau diedit
   @override
@@ -81,7 +78,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                 child: Padding(
                   padding: EdgeInsets.only(top: 50),
                   child: Text(
-                    'Edit Task',
+                    'View Task',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -137,15 +134,11 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         ),
                       ),
                       child: TextField(
+                        enabled: false,
                         controller: controllerName,
                         decoration: InputDecoration(
-                          hintText: 'type something...',
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(10.0),
-                          hintStyle: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey[400],
-                          ),
                         ),
                         maxLines: null,
                         keyboardType: TextInputType.multiline,
@@ -154,15 +147,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         },
                       ),
                     ),
-                    Text(
-                      errorText,
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: 12,
-                      ),
-                    ),
                     SizedBox(
-                      height: 20,
+                      height: 35,
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
@@ -188,15 +174,17 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         ),
                       ),
                       child: TextField(
+                        enabled: false,
                         controller: controllerDescription,
                         decoration: InputDecoration(
-                          hintText: 'type something...',
+                          hintText: controllerDescription.text.isEmpty
+                              ? 'The description is empty'
+                              : '',
+                          hintStyle: TextStyle(
+                            fontStyle: FontStyle.italic
+                          ),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.all(10.0),
-                          hintStyle: TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.grey[400],
-                          ),
                         ),
                         maxLines: null,
                         keyboardType: TextInputType.multiline,
@@ -223,35 +211,17 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         ),
                       ),
                       onPressed: () async {
-                        if (controllerName.text.isNotEmpty) {
-                          Todo todo = Todo(
-                            name: controllerName.text,
-                            description: controllerDescription.text,
-                          ); // Buat todo baru menggantikan todo lama
-                          await TodoDatabase.editTodo(widget.index,
-                              todo); // Edit todo berdasarkan index
-                          if (context.mounted) {
-                            Navigator.pushAndRemoveUntil(
-                              // Pindah ke halaman utama dan hapus semua halaman sebelumnya
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WidgetTree(
-                                  message: 'Task edited successfully!',
-                                ),
-                              ),
-                              (route) => false,
-                            );
-                          }
-                        } else {
-                          setState(
-                            () {
-                              errorText = 'Title cannot be empty!';
-                            },
-                          );
-                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditTodoPage(
+                              index: widget.index,
+                            ),
+                          ),
+                        );
                       },
                       child: Text(
-                        'Save Changes',
+                        'Edit Task',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 16,
@@ -259,73 +229,6 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextButton(
-                      style: ButtonStyle(
-                        minimumSize: WidgetStateProperty.all<Size>(
-                          Size(double.infinity, 50),
-                        ),
-                        shape: WidgetStateProperty.all<OutlinedBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              // Dialog untuk konfirmasi hapus task
-                              title: Text("Delete Task"),
-                              content: Text(
-                                "Are you sure you want to delete this task?",
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Text("Cancel"),
-                                ),
-                                TextButton(
-                                  onPressed: () async {
-                                    await TodoDatabase.removeTodo(widget.index);
-                                    if (context.mounted) {
-                                      Navigator.pushAndRemoveUntil(
-                                        // Pindah ke halaman utama dan hapus semua halaman sebelumnya
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => WidgetTree(
-                                            message:
-                                                'Task deleted successfully!',
-                                          ),
-                                        ),
-                                        (route) => false,
-                                      );
-                                    }
-                                  },
-                                  child: Text(
-                                    "Delete",
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      child: Text(
-                        "Delete",
-                        style: TextStyle(
-                          color: Colors.red,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
