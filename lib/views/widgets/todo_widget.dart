@@ -29,10 +29,11 @@ class _TodoWidgetState extends State<TodoWidget> {
     taskComplete = ValueNotifier(widget.isComplete);
   }
 
+  // Dispose buat mengatasi memory leak
   @override
   void dispose() {
-    super.dispose();
     taskComplete.dispose();
+    super.dispose();
   }
 
   @override
@@ -57,7 +58,6 @@ class _TodoWidgetState extends State<TodoWidget> {
           },
           child: Container(
             padding: EdgeInsets.all(15),
-            width: MediaQuery.of(context).size.width * 0.85,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -67,16 +67,20 @@ class _TodoWidgetState extends State<TodoWidget> {
               ),
             ),
             child: Row(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  widget.taskName,
-                  style: TextStyle(
-                    color: taskComplete.value
-                        ? Constants.ristekPrimaryColor
-                        : Color(0xFF4A4646),
-                    fontSize: 17.0,
-                    fontWeight: FontWeight.w500,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.65,
+                  child: Text(
+                    widget.taskName,
+                    style: TextStyle(
+                      color: taskComplete.value
+                          ? Constants.ristekPrimaryColor
+                          : Color(0xFF4A4646),
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 ValueListenableBuilder(

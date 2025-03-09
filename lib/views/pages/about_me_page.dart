@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -22,6 +23,7 @@ class _AboutMePageState extends State<AboutMePage> {
   String nickname = '';
   String hobbies = '';
   String socialMedia = '';
+  Timer? _debounce;
 
   Future<void> _pickAndSaveProfilePicture() async {
     final picker = ImagePicker();
@@ -37,12 +39,22 @@ class _AboutMePageState extends State<AboutMePage> {
 
     setState(() {
       profileImageBytes = bytes;
+      if (context.mounted) {
+        _showSnackbar(
+            context, 'Profile picture saved successfully', Colors.green);
+      }
     });
   }
 
   Future<void> loadProfilePicture() async {
     profileImageBytes = await ProfilePictureData.getProfilePicture();
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 
   @override
@@ -143,16 +155,28 @@ class _AboutMePageState extends State<AboutMePage> {
                           ),
                         ),
                         child: TextField(
-                          controller: controllerFullName,
+                          controller: Controllers.controllerFullName,
                           decoration: InputDecoration(
                             hintText: 'John Doe',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
+                          onChanged: (value) async {
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              Duration(milliseconds: 1000),
+                              () async {
+                                fullNameNotifier.value = value;
+                                await PersonalInfo.savePersonalData();
+                                if (context.mounted) {
+                                  _showSnackbar(context,
+                                      'Data saved successfully', Colors.green);
+                                }
+                              },
+                            );
+                          },
                           onEditingComplete: () async {
                             FocusScope.of(context).unfocus();
-                            fullNameNotifier.value = controllerFullName.text;
-                            await PersonalInfo.savePersonalData();
                           },
                         ),
                       ),
@@ -183,16 +207,28 @@ class _AboutMePageState extends State<AboutMePage> {
                           ),
                         ),
                         child: TextField(
-                          controller: controllerNickname,
+                          controller: Controllers.controllerNickname,
                           decoration: InputDecoration(
                             hintText: 'John',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
+                          onChanged: (value) async {
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              Duration(milliseconds: 1000),
+                              () async {
+                                nicknameNotifier.value = value;
+                                await PersonalInfo.savePersonalData();
+                                if (context.mounted) {
+                                  _showSnackbar(context,
+                                      'Data saved successfully', Colors.green);
+                                }
+                              },
+                            );
+                          },
                           onEditingComplete: () async {
                             FocusScope.of(context).unfocus();
-                            nicknameNotifier.value = controllerNickname.text;
-                            await PersonalInfo.savePersonalData();
                           },
                         ),
                       ),
@@ -223,16 +259,28 @@ class _AboutMePageState extends State<AboutMePage> {
                           ),
                         ),
                         child: TextField(
-                          controller: controllerHobbies,
+                          controller: Controllers.controllerHobbies,
                           decoration: InputDecoration(
                             hintText: 'Football, Basketball, etc.',
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
+                          onChanged: (value) async {
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              Duration(milliseconds: 1000),
+                              () async {
+                                hobbiesNotifier.value = value;
+                                await PersonalInfo.savePersonalData();
+                                if (context.mounted) {
+                                  _showSnackbar(context,
+                                      'Data saved successfully', Colors.green);
+                                }
+                              },
+                            );
+                          },
                           onEditingComplete: () async {
                             FocusScope.of(context).unfocus();
-                            hobbiesNotifier.value = controllerHobbies.text;
-                            await PersonalInfo.savePersonalData();
                           },
                         ),
                       ),
@@ -263,7 +311,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           ),
                         ),
                         child: TextField(
-                          controller: controllerSocialMedia,
+                          controller: Controllers.controllerSocialMedia,
                           keyboardType: TextInputType.url,
                           decoration: InputDecoration(
                             hintText: 'https://www.instagram.com/johndoe',
@@ -271,17 +319,29 @@ class _AboutMePageState extends State<AboutMePage> {
                             contentPadding: EdgeInsets.all(10.0),
                             prefixIcon: GestureDetector(
                               onTap: () {
-                                _launchURL(context, controllerSocialMedia.text);
+                                _launchURL(context,
+                                    Controllers.controllerSocialMedia.text);
                               },
                               child: Icon(Icons.link,
                                   color: Constants.ristekPrimaryColor),
                             ),
                           ),
+                          onChanged: (value) async {
+                            _debounce?.cancel();
+                            _debounce = Timer(
+                              Duration(milliseconds: 1000),
+                              () async {
+                                socialMediaNotifier.value = value;
+                                await PersonalInfo.savePersonalData();
+                                if (context.mounted) {
+                                  _showSnackbar(context,
+                                      'Data saved successfully', Colors.green);
+                                }
+                              },
+                            );
+                          },
                           onEditingComplete: () async {
                             FocusScope.of(context).unfocus();
-                            socialMediaNotifier.value =
-                                controllerSocialMedia.text;
-                            await PersonalInfo.savePersonalData();
                           },
                         ),
                       ),
@@ -307,16 +367,16 @@ Future<void> _launchURL(BuildContext context, String url) async {
     if (!context.mounted) {
       return; // Cek apakah widget masih ada sebelum showSnackbar
     }
-    _showSnackbar(context, 'Could not launch URL $url');
+    _showSnackbar(context, 'Could not launch URL $url', Colors.red);
   }
 }
 
 // Menampilkan snackbar sebagai notifikasi
-void _showSnackbar(BuildContext context, String message) {
+void _showSnackbar(BuildContext context, String message, Color color) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       content: Text(message),
-      backgroundColor: Colors.red,
+      backgroundColor: color,
       duration: Duration(seconds: 2),
     ),
   );

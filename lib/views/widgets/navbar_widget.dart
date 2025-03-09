@@ -80,7 +80,7 @@ class NavbarWidget extends StatelessWidget {
                 ],
                 currentIndex: selectedPage.value,
                 onTap: (index) {
-                  pageController.animateToPage(
+                  Controllers.pageController.animateToPage(
                     index,
                     duration: Duration(milliseconds: 100),
                     curve: Curves.easeInOut,

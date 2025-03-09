@@ -42,7 +42,6 @@ class WidgetTree extends StatefulWidget {
 }
 
 class _WidgetTreeState extends State<WidgetTree> {
-
   // Load semua data yang pernah di save di shared preferences jika ada
   @override
   void initState() {
@@ -53,7 +52,8 @@ class _WidgetTreeState extends State<WidgetTree> {
 
     if (widget.message != null) {
       // Jalankan setelah build selesai
-      Future.microtask( // Supaya memunculkan Snackbar hanya sekali (jika dibutuhkan)
+      Future.microtask(
+        // Supaya memunculkan Snackbar hanya sekali (jika dibutuhkan)
         () {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -77,12 +77,10 @@ class _WidgetTreeState extends State<WidgetTree> {
   void _loadPersonalData() async {
     await PersonalInfo.loadPersonalData();
     setState(() {
-      setState(() {
-        controllerFullName.text = fullNameNotifier.value;
-        controllerNickname.text = nicknameNotifier.value;
-        controllerHobbies.text = hobbiesNotifier.value;
-        controllerSocialMedia.text = socialMediaNotifier.value;
-      });
+      Controllers.controllerFullName.text = fullNameNotifier.value;
+      Controllers.controllerNickname.text = nicknameNotifier.value;
+      Controllers.controllerHobbies.text = hobbiesNotifier.value;
+      Controllers.controllerSocialMedia.text = socialMediaNotifier.value;
     });
   }
 
@@ -109,7 +107,7 @@ class _WidgetTreeState extends State<WidgetTree> {
       ),
       bottomNavigationBar: NavbarWidget(),
       body: PageView(
-        controller: pageController,
+        controller: Controllers.pageController,
         onPageChanged: (value) {
           selectedPage.value = value;
         },

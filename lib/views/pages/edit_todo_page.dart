@@ -136,6 +136,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                       ),
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
                       onEditingComplete: () async {
                         FocusScope.of(context).unfocus(); // Tutup keyboard
                         if (controller.text.isNotEmpty) {
@@ -188,10 +190,14 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     ),
                     onPressed: () async {
                       if (controller.text.isNotEmpty) {
-                        Todo todo = Todo(name: controller.text); // Buat todo baru menggantikan todo lama
-                        await TodoDatabase.editTodo(widget.index, todo); // Edit todo berdasarkan index
+                        Todo todo = Todo(
+                            name: controller
+                                .text); // Buat todo baru menggantikan todo lama
+                        await TodoDatabase.editTodo(
+                            widget.index, todo); // Edit todo berdasarkan index
                         if (context.mounted) {
-                          Navigator.pushAndRemoveUntil( // Pindah ke halaman utama dan hapus semua halaman sebelumnya
+                          Navigator.pushAndRemoveUntil(
+                            // Pindah ke halaman utama dan hapus semua halaman sebelumnya
                             context,
                             MaterialPageRoute(
                               builder: (context) => WidgetTree(
@@ -236,7 +242,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog( // Dialog untuk konfirmasi hapus task
+                          return AlertDialog(
+                            // Dialog untuk konfirmasi hapus task
                             title: Text("Delete Task"),
                             content: Text(
                               "Are you sure you want to delete this task?",
@@ -252,7 +259,8 @@ class _EditTodoPageState extends State<EditTodoPage> {
                                 onPressed: () async {
                                   await TodoDatabase.removeTodo(widget.index);
                                   if (context.mounted) {
-                                    Navigator.pushAndRemoveUntil( // Pindah ke halaman utama dan hapus semua halaman sebelumnya
+                                    Navigator.pushAndRemoveUntil(
+                                      // Pindah ke halaman utama dan hapus semua halaman sebelumnya
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => WidgetTree(

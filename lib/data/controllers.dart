@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-// Controller buat atur page NavigationBar
-PageController pageController = PageController();
+class Controllers {
+  // Controller buat atur page NavigationBar
+  static final PageController pageController = PageController();
 
-// Controller buat atur personal info user
-TextEditingController controllerFullName = TextEditingController();
-TextEditingController controllerNickname = TextEditingController();
-TextEditingController controllerHobbies = TextEditingController();
-TextEditingController controllerSocialMedia = TextEditingController();
+  // Controller buat atur personal info user
+  static final TextEditingController controllerFullName =
+      TextEditingController();
+  static final TextEditingController controllerNickname =
+      TextEditingController();
+  static final TextEditingController controllerHobbies =
+      TextEditingController();
+  static final TextEditingController controllerSocialMedia =
+      TextEditingController();
+}

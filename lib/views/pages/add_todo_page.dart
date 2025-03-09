@@ -15,6 +15,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
   TextEditingController controller = TextEditingController(); // Controller buat ambil input user
   String errorText = '';
 
+  // Dispose buat mengatasi memory leak
   @override
   void dispose() {
     controller.dispose();
@@ -26,6 +27,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
     return Scaffold(
       backgroundColor: Constants.ristekPrimaryColor,
       body: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
             children: [
@@ -122,6 +124,8 @@ class _AddTodoPageState extends State<AddTodoPage> {
                         border: InputBorder.none,
                         contentPadding: EdgeInsets.all(10.0),
                       ),
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
                       onEditingComplete: () async {
                         FocusScope.of(context).unfocus(); // Tutup keyboard
                         if (controller.text.isNotEmpty) {
