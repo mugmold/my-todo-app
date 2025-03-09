@@ -1,10 +1,26 @@
 # ristek-todo-app
 
+RistekTodo adalah aplikasi To-Do List yang dibangun menggunakan Flutter. Aplikasi ini memungkinkan pengguna untuk menambahkan, mengedit, dan menghapus daftar tugas mereka dengan mudah. Selain fitur manajemen tugas, aplikasi ini juga memiliki fitur **Data Pribadi**, yang di mana pengguna dapat menyimpan informasi seperti foto profil, nama lengkap, username, hobi, dan tautan media sosial mereka. Semua data akan tersimpan secara lokal agar dapat diakses meskipun aplikasi ditutup.
+
+## Fitur Aplikasi
+
+- Tambah, edit, dan hapus tugas, serta data pribadi pengguna.
+- Penyimpanan data secara lokal.
+- Menampilkan tanggal dan waktu dalam format yang disesuaikan.
+- Memasukkan gambar dari galeri/kamera sebagai foto profil di bagian data pengguna.
+
 ## Pembelajaran
 
-Selama proses pembuatan app ini, saya mempelajari banyak hal tentang build mobile app dengan Flutter. Saya memahami bagaimana cara menggunakan **widget bawaan** untuk membangun UI serta membuat **custom widget** agar memberikan kesan clean code dan design yang reusable.
+Dalam pengembangan aplikasi ini, saya mempelajari:
 
-Saya juga belajar cara menggunakan `setState` untuk memperbarui seluruh page dan `Notifiers` agar hanya bagian tertentu dari UI diperbarui tanpa merender ulang seluruh page, sehingga performa lebih optimal. Selain itu, saya juga mempelajari cara debounce untuk menangani event seperti menampilkan snackbar agar tidak muncul berulang kali dalam waktu singkat.
+- **Widget Flutter**: Menggunakan **widget bawaan** ataupun **custom widget** untuk clean code dan UI yang reusable.
+- **State Management**: `setState` untuk update halaman dan `Notifiers` agar hanya sebagian UI yang keupdate, sehingga lebih efisien.
+- **Debounce**: Mencegah event berulang seperti snackbar muncul berkali-kali.
+- **SharedPreferences**: Menyimpan data lokal, baik primitif maupun non-primitif dengan konversi **JSON String**.
+- **Lifecycle Methods**: `initState` untuk inisialisasi data, `dispose` untuk mencegah memory leak.
+- **Konfigurasi App**: Mengedit `pubspec.yaml`, `AndroidManifest.xml` untuk Android dan `Info.plist` untuk iOS supaya dapat mengatur fitur seperti mode layar dan nama aplikasi.
+
+## Dependencies
 
 Saya juga mempelajari cara import dan menggunakan **dependencies** untuk menambah fitur app. Beberapa package yang saya gunakan antara lain:
 
@@ -13,13 +29,6 @@ Saya juga mempelajari cara import dan menggunakan **dependencies** untuk menamba
 - **intl** – Format tanggal dan waktu
 - **url_launcher** – Membuka app external untuk akses link
 - **image_picker** – Memilih gambar dari galeri/kamera
-
-Selain itu, saya mempelajari bagaimana cara menggunakan **SharedPreferences** untuk menyimpan data primitif seperti `string`, serta data non-primitif dengan konversi **JSON String** agar data tetap tersimpan setelah app ditutup.
-
-Saya juga memahami cara kerja `initState` untuk inisialisasi data sebelum UI ditampilkan dan `dispose` untuk membersihkan resource agar mencegah memory leak.
-
-Saya juga belajar bagaimana cara **mengimport gambar dan font** agar dapat digunakan dalam app, termasuk konfigurasi di `pubspec.yaml`,
-serta mempelajari bagaimana cara **mengedit** `AndroidManifest.xml` **dan** `Info.plist` untuk membatasi fitur tertentu di app saya, seperti memblokir mode landscape dan mengubah nama app di OS tertentu.
 
 ## Referensi
 
