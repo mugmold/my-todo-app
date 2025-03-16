@@ -44,7 +44,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Constants.ristekPrimaryColor,
+      backgroundColor: Constants.primaryColor,
       body: Column(
         children: [
           Stack(
@@ -70,7 +70,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                       child: Icon(
                         Icons.arrow_back,
                         size: 20,
-                        color: Constants.ristekPrimaryColor,
+                        color: Constants.primaryColor,
                       ),
                     ),
                   ),
@@ -121,7 +121,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Constants.ristekPrimaryColor,
+                          color: Constants.primaryColor,
                         ),
                       ),
                     ),
@@ -132,7 +132,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Constants.ristekPrimaryTransparent,
+                          color: Constants.primaryTransparent,
                           width: 1,
                         ),
                       ),
@@ -172,7 +172,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Constants.ristekPrimaryColor,
+                          color: Constants.primaryColor,
                         ),
                       ),
                     ),
@@ -183,7 +183,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: Constants.ristekPrimaryTransparent,
+                          color: Constants.primaryTransparent,
                           width: 1,
                         ),
                       ),
@@ -211,7 +211,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     FilledButton(
                       style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.all<Color>(
-                          Constants.ristekPrimaryColor,
+                          Constants.primaryColor,
                         ),
                         minimumSize: WidgetStateProperty.all<Size>(
                           Size(double.infinity, 50),

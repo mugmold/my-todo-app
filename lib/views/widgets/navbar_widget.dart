@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_todo_app/data/constants.dart';
 import 'package:my_todo_app/data/controllers.dart';
 import 'package:my_todo_app/data/notifiers.dart';
 
@@ -43,6 +44,8 @@ class NavbarWidget extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/home_inactive.png',
                         height: MediaQuery.of(context).size.height * 0.04,
+                        color: Constants.primaryTransparent,
+                        colorBlendMode: BlendMode.srcIn,
                       ),
                     ),
                     activeIcon: Padding(
@@ -52,6 +55,8 @@ class NavbarWidget extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/home_active.png',
                         height: MediaQuery.of(context).size.height * 0.04,
+                        color: Constants.primaryColor,
+                        colorBlendMode: BlendMode.srcIn,
                       ),
                     ),
                     label: '',
@@ -64,6 +69,8 @@ class NavbarWidget extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/profile_inactive.png',
                         height: MediaQuery.of(context).size.height * 0.04,
+                        color: Constants.primaryTransparent,
+                        colorBlendMode: BlendMode.srcIn,
                       ),
                     ),
                     activeIcon: Padding(
@@ -73,18 +80,19 @@ class NavbarWidget extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/profile_active.png',
                         height: MediaQuery.of(context).size.height * 0.04,
+                        color: Constants.primaryColor,
+                        colorBlendMode: BlendMode.srcIn,
                       ),
                     ),
                     label: '',
                   ),
                 ],
                 currentIndex: selectedPage.value,
+                // matiin animasi sebelumnya
                 onTap: (index) {
-                  Controllers.pageController.animateToPage(
-                    index,
-                    duration: Duration(milliseconds: 100),
-                    curve: Curves.easeInOut,
-                  );
+                  selectedPage.value = index;
+                  Controllers.pageController
+                      .jumpToPage(index);
                 },
               ),
             ),

@@ -20,13 +20,18 @@ List<AppBar> pagesAppBar = [
     backgroundColor: Colors.white,
   ),
   AppBar(
-    backgroundColor: Constants.ristekPrimaryColor,
+    backgroundColor: Constants.primaryColor,
     title: Text(
       'My profile',
-      style: Constants.ristekTitleStyle,
+      style: Constants.myTitleStyle,
     ),
     centerTitle: true,
   ),
+];
+
+List<Color> pagesAppBarColor = [
+  Colors.white,
+  Constants.primaryColor,
 ];
 
 class WidgetTree extends StatefulWidget {
@@ -95,24 +100,23 @@ class _WidgetTreeState extends State<WidgetTree> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: ValueListenableBuilder<int>(
-          valueListenable: selectedPage,
-          builder: (context, value, child) {
-            return pagesAppBar[value];
-          },
-        ),
-      ),
-      bottomNavigationBar: NavbarWidget(),
-      body: PageView(
-        controller: Controllers.pageController,
-        onPageChanged: (value) {
-          selectedPage.value = value;
-        },
-        children: pages,
-      ),
+    return ValueListenableBuilder<int>(
+      valueListenable: selectedPage,
+      builder: (context, value, child) {
+        return Scaffold(
+          backgroundColor: pagesAppBarColor[value],
+          appBar: pagesAppBar[value],
+          bottomNavigationBar: NavbarWidget(),
+          body: PageView(
+            controller: Controllers.pageController,
+            physics: NeverScrollableScrollPhysics(), // matiin scroll, males fix bug
+            onPageChanged: (value) {
+              selectedPage.value = value;
+            },
+            children: pages,
+          ),
+        );
+      },
     );
   }
 }

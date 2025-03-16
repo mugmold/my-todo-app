@@ -23,7 +23,7 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Welcome to RistekTodo!',
+              'Welcome to MyTodo!',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class WelcomePage extends StatelessWidget {
             // Button buat pergi ke widgetTree
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Constants.ristekPrimaryColor,
+                backgroundColor: Constants.primaryColor,
               ),
               onPressed: () {
                 // Ganti navigator default dr welcome jadi widgetTree
@@ -53,7 +53,7 @@ class WelcomePage extends StatelessWidget {
               },
               child: const Text(
                 'Continue',
-                style: Constants.ristekTitleStyle,
+                style: Constants.myTitleStyle,
               ),
             ),
           ],

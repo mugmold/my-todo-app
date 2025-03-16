@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 
-// Warna berdasarkan tema Ristek
 class Constants {
-  static const Color ristekPrimaryColor = Color(0xFF5038BC);
-  static const Color ristekPrimaryTransparent = Color(0x295038BC);
+  static const Color primaryColor = Color.fromARGB(255, 19, 47, 160);
+  static const Color primaryTransparent = Color.fromARGB(41, 75, 55, 186);
 
-  static const TextStyle ristekTitleStyle = TextStyle(
+  static const TextStyle myTitleStyle = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.white,
   );

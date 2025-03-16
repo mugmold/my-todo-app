@@ -63,7 +63,7 @@ class _TodoWidgetState extends State<TodoWidget> {
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: Constants.ristekPrimaryTransparent,
+                color: Constants.primaryTransparent,
                 width: 1,
               ),
             ),
@@ -77,7 +77,7 @@ class _TodoWidgetState extends State<TodoWidget> {
                     widget.taskName,
                     style: TextStyle(
                       color: taskComplete.value
-                          ? Constants.ristekPrimaryColor
+                          ? Constants.primaryColor
                           : Color(0xFF4A4646),
                       fontSize: 17.0,
                       fontWeight: FontWeight.w500,

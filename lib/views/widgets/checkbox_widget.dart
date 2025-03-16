@@ -22,7 +22,7 @@ class CheckboxWidget extends StatelessWidget {
           shape: BoxShape.circle,
           color: Colors.transparent,
           border: Border.all(
-            color: Constants.ristekPrimaryColor,
+            color: Constants.primaryColor,
             width: 2,
           ),
         ),
@@ -32,7 +32,7 @@ class CheckboxWidget extends StatelessWidget {
             height: 18,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: value ? Constants.ristekPrimaryColor : Colors.transparent,
+              color: value ? Constants.primaryColor : Colors.transparent,
             ),
           ),
         ),

@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               Text(
-                'Have a nice day !',
+                'Have a nice day!',
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF474747),
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                   FilledButton(
                     style: ButtonStyle(
                       backgroundColor: WidgetStateProperty.all<Color>(
-                        Constants.ristekPrimaryColor,
+                        Constants.primaryColor,
                       ),
                       minimumSize: WidgetStateProperty.all<Size>(
                         Size(80, 30),

@@ -62,7 +62,7 @@ class _AboutMePageState extends State<AboutMePage> {
     return Stack(
       children: [
         Container(
-          color: Constants.ristekPrimaryColor,
+          color: Constants.primaryColor,
         ),
         Column(
           children: [
@@ -139,7 +139,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Constants.ristekPrimaryColor,
+                            color: Constants.primaryColor,
                           ),
                         ),
                       ),
@@ -150,7 +150,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Constants.ristekPrimaryTransparent,
+                            color: Constants.primaryTransparent,
                             width: 1,
                           ),
                         ),
@@ -158,6 +158,9 @@ class _AboutMePageState extends State<AboutMePage> {
                           controller: Controllers.controllerFullName,
                           decoration: InputDecoration(
                             hintText: 'John Doe',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
@@ -191,7 +194,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Constants.ristekPrimaryColor,
+                            color: Constants.primaryColor,
                           ),
                         ),
                       ),
@@ -202,7 +205,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Constants.ristekPrimaryTransparent,
+                            color: Constants.primaryTransparent,
                             width: 1,
                           ),
                         ),
@@ -210,6 +213,9 @@ class _AboutMePageState extends State<AboutMePage> {
                           controller: Controllers.controllerNickname,
                           decoration: InputDecoration(
                             hintText: 'John',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
@@ -243,7 +249,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Constants.ristekPrimaryColor,
+                            color: Constants.primaryColor,
                           ),
                         ),
                       ),
@@ -254,7 +260,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Constants.ristekPrimaryTransparent,
+                            color: Constants.primaryTransparent,
                             width: 1,
                           ),
                         ),
@@ -262,6 +268,9 @@ class _AboutMePageState extends State<AboutMePage> {
                           controller: Controllers.controllerHobbies,
                           decoration: InputDecoration(
                             hintText: 'Football, Basketball, etc.',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
@@ -295,7 +304,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            color: Constants.ristekPrimaryColor,
+                            color: Constants.primaryColor,
                           ),
                         ),
                       ),
@@ -306,7 +315,7 @@ class _AboutMePageState extends State<AboutMePage> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: Constants.ristekPrimaryTransparent,
+                            color: Constants.primaryTransparent,
                             width: 1,
                           ),
                         ),
@@ -315,6 +324,9 @@ class _AboutMePageState extends State<AboutMePage> {
                           keyboardType: TextInputType.url,
                           decoration: InputDecoration(
                             hintText: 'https://www.instagram.com/johndoe',
+                            hintStyle: TextStyle(
+                              color: Colors.grey,
+                            ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                             prefixIcon: GestureDetector(
@@ -323,7 +335,7 @@ class _AboutMePageState extends State<AboutMePage> {
                                     Controllers.controllerSocialMedia.text);
                               },
                               child: Icon(Icons.link,
-                                  color: Constants.ristekPrimaryColor),
+                                  color: Constants.primaryColor),
                             ),
                           ),
                           onChanged: (value) async {
