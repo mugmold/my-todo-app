@@ -1,0 +1,2 @@
+E:/mobdev/my_todo_app/android/app/.cxx/RelWithDebInfo/1342r6j1/x86_64/CMakeFiles/edit_cache.dir
+E:/mobdev/my_todo_app/android/app/.cxx/RelWithDebInfo/1342r6j1/x86_64/CMakeFiles/rebuild_cache.dir
